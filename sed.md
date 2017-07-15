@@ -1,6 +1,5 @@
 # sed
 
-
 The `-i` option tells `sed` that it should write the output back into the source
 file.
 
