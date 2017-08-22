@@ -166,7 +166,7 @@ Result:
 
 ---
 
-## Positioinal parameters
+## Positional parameters
 
 Positional parameters = command line arguments.
 
