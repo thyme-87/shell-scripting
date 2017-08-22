@@ -50,11 +50,11 @@ those variables that are explicitely stated in the command line).
 
 ---
 
-Variables can also be removed using the `unset` command:
+Variables can also be removed using the `unset` command.
+To remove the variable `$LC_ALL`:
 
     unset LC_ALL
 
-will remove the variable `$LC_ALL`
 
 It is also possible to remove functions using the `unset` command:
 
