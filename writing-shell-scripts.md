@@ -520,31 +520,31 @@ we can also print that back to the user.
 
 So the final version of our snippit looks like:
 
-file= verbose= quiet= long=
+    file= verbose= quiet= long=
 
-while getopts :f:vql opt
-do
-    case $opt in
-    f)  file=$OPTARG
-        ;;
-    v)  verbose=true
-        quiet=
-        ;;
-    q)  quiet=true
-        verbose=
-        ;;
-    l)  long=true
-        ;;
-    '?') echo "$1: is invalid! -$OPTARG" >&2
-         echo "Usage: $0 [-f file] [vql] [files ...]" >&2
-         exit 1
-         ;;
-    esac
-done
+    while getopts :f:vql opt
+    do
+        case $opt in
+        f)  file=$OPTARG
+            ;;
+        v)  verbose=true
+            quiet=
+            ;;
+        q)  quiet=true
+            verbose=
+            ;;
+        l)  long=true
+            ;;
+        '?') echo "$1: is invalid! -$OPTARG" >&2
+             echo "Usage: $0 [-f file] [vql] [files ...]" >&2
+             exit 1
+             ;;
+        esac
+    done
 
-shift $((OPTIND -1))
+    shift $((OPTIND -1))
 
-**Not that the OPTIND-variable is shared between a script and child-scripts that
+**Note that the OPTIND-variable is shared between a script and child-scripts that
 are called from within the first script! So the usage in  child-script requires
 at least to set OPTIND=1 but in general it is not a good idea to do so.**
 
