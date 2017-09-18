@@ -544,7 +544,7 @@ So the final version of our snippit looks like:
 
     shift $((OPTIND -1))
 
-**Not that the OPTIND-variable is shared between a script and child-scripts that
+**Note that the OPTIND-variable is shared between a script and child-scripts that
 are called from within the first script! So the usage in  child-script requires
 at least to set OPTIND=1 but in general it is not a good idea to do so.**
 
