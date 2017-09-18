@@ -520,29 +520,29 @@ we can also print that back to the user.
 
 So the final version of our snippit looks like:
 
-file= verbose= quiet= long=
+    file= verbose= quiet= long=
 
-while getopts :f:vql opt
-do
-    case $opt in
-    f)  file=$OPTARG
-        ;;
-    v)  verbose=true
-        quiet=
-        ;;
-    q)  quiet=true
-        verbose=
-        ;;
-    l)  long=true
-        ;;
-    '?') echo "$1: is invalid! -$OPTARG" >&2
-         echo "Usage: $0 [-f file] [vql] [files ...]" >&2
-         exit 1
-         ;;
-    esac
-done
+    while getopts :f:vql opt
+    do
+        case $opt in
+        f)  file=$OPTARG
+            ;;
+        v)  verbose=true
+            quiet=
+            ;;
+        q)  quiet=true
+            verbose=
+            ;;
+        l)  long=true
+            ;;
+        '?') echo "$1: is invalid! -$OPTARG" >&2
+             echo "Usage: $0 [-f file] [vql] [files ...]" >&2
+             exit 1
+             ;;
+        esac
+    done
 
-shift $((OPTIND -1))
+    shift $((OPTIND -1))
 
 **Not that the OPTIND-variable is shared between a script and child-scripts that
 are called from within the first script! So the usage in  child-script requires
@@ -571,3 +571,109 @@ Example:
     my_happy_function "This is a test!"
 
 will print: `This is a test!` on the command line after invocation.
+
+## Redirection Operators
+
+Setting to protect files from being overwritten using the `>` operator:
+
+    unset -C
+
+Provide input data:
+
+    <<
+
+Provide input data but strip tabs:
+
+    <<-
+
+Explicitly stating the Delimiter and quoting it, will prevent the shell from
+processing the content:
+
+    cat << 'E'OF
+    This is a test: $XAUTHORITY: $XAUTHORITY
+    EOF
+
+will print the exact same text and not resolve the environment variable.
+
+It is possible to change the I/O using `exec`:
+
+    exec 2> /tmp/my.log #redirect standard error to /tmp/my.log
+    exec 3> /some/file  #open new file descriptor 3
+    read myinput <&3    #read from '3'
+
+## exec
+
+`exec` runs a program in the same process. `exec` can be used to start another
+program with the same environment variables.
+
+## printf
+
+`printf` is mighty!
+
+
+printf [FORMAT-STRING] "argument-string"
+
+### printf escape sequences:
+
+    \a  alert (bell)
+    \b  backspace
+    \c  no final newline; ignore arguments and format string (?)
+    \f  formfeed
+    \n  newline
+    \r  carraige return
+    \t  horizontal tab
+    \v  vertical tab
+    \\  literal backslash
+    \ddd    character represented as 1-3 digital octal value (only in format
+    string)
+    \0ddd   character represented as a 1-3 digital octal value
+
+### printf format specifiers
+
+    %b  Apply escape sequences in the current string
+    %c  Print first character of the corresponding argument
+    %d,%i   Decimal integer
+    %e  Floating-point format ([-]d.precisione[+-]dd).
+    %E  Floating-point format ([-]d.precisionE[+-]dd).
+    %f  Floating-point format ([-]ddd.precision).
+    %g  %e or %f conversion depending which is shorter, strip trailing zeros
+    %G  %E or %F conversion depending which is shorter, strip trailing zeros
+    %o  Unsigned octal value
+    %s  String
+    %u  Unsigned decimal value
+    %x  Usigned hexadecimal (a-f)
+    %X  Usigned hexadecimal (A-F)
+    %%  Literal %
+
+### format expressions
+
+A format specifier can take up to three modifiers that are placed between `%`
+and the format specifying character (_width_ and _precision_):
+
+    width - a numerical value (right-aligned per default)
+    printf "|%20s|\n" hello
+
+Output:
+
+    |               hello|
+
+    precision - a numerical value that controls the number of digits in the
+    output
+
+    printf "My salary is %.6d\n" 48000
+Output:
+
+    My salary is 048000
+
+    printf "%.12s\n" "So let me tell you the story"
+Output:
+    
+    so let me te
+
+    printf "Keep only two digits after the point: $.2f" 3.1415926535
+Output:
+
+    Keep only two digits after the point: 3.14
+
+
+
