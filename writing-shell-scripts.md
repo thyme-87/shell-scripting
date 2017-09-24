@@ -675,5 +675,46 @@ Output:
 
     Keep only two digits after the point: 3.14
 
+It follows, that precision affects the formats differently:
+
+    %d,%i,%o,%x,%X  Minimum number of digits; pad with zeros
+    %e,%E           Minimum number of digits (after the point)
+    %f              Number of digits (after the point)
+    %g,%G           Maximum number of digits that encode information
+    %s              Maximum number of characters to print
 
 
+Flags: in addition to _width_ and _precision_ _flags_ may be added:
+
+    -   Left-justify the formatted value that goes into the field
+    <space> Prefix with space or minus (for netative values)
+    +   Always prefix numerical values with sign (+ or -)
+    0   Pad output with zeros, not spaces
+    #   Use alternative format for printing (affects: %o,%x, %X, %e, %E, %f, %g
+    and %G)
+
+Examples:
+
+    printf "|%-15s| |%15s|\n" "I'm left" "I'm right"
+Output:
+
+    |I'm left       | |      I'm right|
+
+    printf "% d\n% d\n% d\n===\n% d"
+Output:
+
+ 33
+-23
+ 10
+\===
+ 20
+
+    printf "%#X" 13
+Output:
+    
+    0XD
+
+    printf "Personal ID: %012d\n" 23
+Output
+
+    Personal ID: 000000000023
