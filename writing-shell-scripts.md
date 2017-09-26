@@ -610,8 +610,9 @@ program with the same environment variables.
 
 `printf` is mighty!
 
+scheme:
 
-printf [FORMAT-STRING] "argument-string"
+    printf [FORMAT-STRING] "argument-string"
 
 ### printf escape sequences:
 
@@ -718,3 +719,33 @@ Output:
 Output
 
     Personal ID: 000000000023
+
+Note that printf will repeat its output if there are more arguments than format
+specifiers:
+
+    printf "Hello %s" Ben Bert Bart
+will produce the output:
+
+    Hello Ben
+    Hello Bert
+    Hello Bart
+
+This is important to keep in mind, when building complex expressions that
+contain different format specifiers:
+
+    printf "Product %s costs %.2f EUR\n" banana 5 appel
+
+Will print:
+
+    Product Banana costs 5.00 EUR
+    Product Appel costs 0.00 EUR
+
+The reason is, that `printf` sets the `%.2f` to `0` for missing values.
+
+Note also that:
+
+    printf "Product %s costs %.2f EUR\n" banana 5 appel gold
+
+Will return an error as `printf` can't convert `gold` into `%.2f`.
+
+## Tilde Expansion and Wildcards (globbing)
